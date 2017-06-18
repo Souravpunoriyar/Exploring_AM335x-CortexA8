@@ -1,0 +1,192 @@
+onnect J4 (RXD) to TXD line of  CP2102 USB2.0 to TTL UART serial converter
+Connect J5 (TXD) to RXD line of  CP2102 USB2.0 to TTL UART serial converter
+Connect J1 (GND) to GND line of  CP2102 USB2.0 to TTL UART serial converter
+
+This makes the serial console setup ready.
+
+
+Download U-Boot Source :
+
+gvk51@gvk:~$ mkdir src
+gvk51@gvk:~$ cd src
+gvk51@gvk:~/src$ git clone git://git.denx.de/u-boot.git
+
+
+
+Initialize Build Environment : 
+
+gvk51@gvk:~$ sudo apt-get install git u-boot-tools g++ gawk lzop texinfo git-core build-essential libncurses5-dev gcc-arm-linux-gnueabi
+
+
+Install all the mentioned packages for making build smooth.
+ 
+
+
+Building the Source:
+
+After successful installation of packages we now start building the u-boot source, for use to boot from UART we need the following images u-boot-spl.bin & u-boot.img
+
+gvk51@gvk:~/src$ mkdir images
+gvk51@gvk:~/src$ u-boot
+gvk51@gvk:~/src/u-boot$ make am335x_boneblack_defconfig
+gvk51@gvk:~/src/u-boot$ make -j4
+gvk51@gvk:~/src/u-boot$ cp ./u-boot.img ../images/
+gvk51@gvk:~/src/u-boot$ cp ./spl/u-boot-spl.bin ../images/
+
+
+Booting BBB from UART:
+
+BBB has different boots modes like boot from eMMC, uSD, serial & usb. To change the boot mode there is a switch S2, holding the boot switch down during boot without a uSD card inserted will force the boot source to be the USB port and if nothing is detected on the USB client port, it will go to the serial port for download.
+
+Host tools for UART boot:
+
+I have used picocom host tool to boot from serial, install it as shown below
+
+gvk51@gvk:~$ sudo apt-get install picocom lrzsz
+
+
+cd to directory where we have copied images, that is src/images folder. Assuming you have connected serial-to-usb converter, then you see a device node say /dev/ttyUSB0 on your host machine. Launch picocom from the images folder.
+
+Commands for picocom:
+
+    sending a file: ctrl+A (ctrl+shift+a)
+    exit: ctrl+X (ctrl+shift+x)
+
+Step1: Open a terminal, issue command picocom -b 115200 /dev/ttyUSB0 --send-cmd "sx -vv", you will see the following output on the console.
+
+picocom v1.7
+
+port is            : /dev/ttyUSB0
+flowcontrol     : none
+baudrate is     : 115200
+parity is          : none
+databits are    : 8
+escape is         : C-a
+local echo is    : no
+noinit is          : no
+noreset is        : no
+nolock is         : no
+send_cmd is     : sx -vv
+receive_cmd is : rz -vv
+imap is            :
+omap is           :
+emap is           : crcrlf,delbs,
+
+Terminal ready
+Step2: give key-combination ctrl+A (ctrl+shift+a), then you will see
+
+*** file:
+enter the file name u-boot-spl.bin and hit enter, you will see 
+
+sx -vv u-boot-spl.bin
+Sending u-boot-spl.bin, 570 blocks: Give your local XMODEM receive command now.
+ 
+Step3: Now holding the boot-mode switch apply power to BBB, make sure there is no uSD & no USB cable connected. picocom starts sending the first stage boot-loader u-boot-spl.bin over UART, you will see the following output, after successful transfer you will see the character 'C' as acknowledgement from BBB.
+ 
+Xmodem sectors/kbytes sent:   0/ 0kRetry 0: Timeout on sector ACK
+Retry 0: Timeout on sector ACK
+Retry 0: Got 00 for sector ACK
+Retry 0: NAK on sector
+Bytes Sent:  73088   BPS:304                            
+
+Transfer complete
+
+*** exit status: 0
+
+U-Boot SPL 2015.07-00256-g413978d-dirty (Aug 06 2015 - 11:52:06)
+C
+
+Step4:  After you see the acknowledgement give key combination ctrl+A (ctrl+shift+a) to send the u-boot.img.
+
+*** file:
+enter the file name u-boot.img and hit enter, here you need to be patient, transfer of u-boot takes around 2-3 minutes and after successful you don't see any acknowledgement 'C' from BBB, after that wait for another 1-2 minutes to see BBB restarting and halt it at u-boot prompt by pressing a key, you will see the below log.
+
+*** file: u-boot.img
+sx -vv u-boot.img
+Sending u-boot.img, 3239 blocks: Give your local XMODEM receive command now.
+Xmodem sectors/kbytes sent:   0/ 0kRetry 0: NAK on sector
+Bytes Sent: 414720   BPS:4480                           
+
+Transfer complete
+
+*** exit status: 0
+xyzModem - CRC mode, 3241(SOH)/0(STX)/0(CAN) packets, 3 retries
+Loaded 414700 bytes
+
+U-Boot 2015.07-00256-g413978d-dirty (Aug 06 2015 - 11:52:06 +0530)
+
+       Watchdog enabled
+I2C:   ready
+DRAM:  512 MiB
+MMC:   OMAP SD/MMC: 0
+Card did not respond to voltage select!
+MMC init failedNet:   <ethaddr> not set. Validating first E-fuse MAC
+cpsw, usb_ether
+Hit any key to stop autoboot:  0
+U-Boot# 
+
+Here is the complete log of the boot sequence.
+
+picocom -b 115200 /dev/ttyUSB0 --send-cmd "sx -vv"
+picocom v1.7
+
+port is        : /dev/ttyUSB0
+flowcontrol    : none
+baudrate is    : 115200
+parity is      : none
+databits are   : 8
+escape is      : C-a
+local echo is  : no
+noinit is      : no
+noreset is     : no
+nolock is      : no
+send_cmd is    : sx -vv
+receive_cmd is : rz -vv
+imap is        : 
+omap is        : 
+emap is        : crcrlf,delbs,
+
+Terminal ready
+
+*** file: u-boot-spl.bin
+sx -vv u-boot-spl.bin 
+Sending u-boot-spl.bin, 570 blocks: Give your local XMODEM receive command now.
+Bytes Sent:  73088   BPS:6471                            
+
+Transfer complete
+
+*** exit status: 0
+
+U-Boot SPL 2015.07-00256-g413978d-dirty (Aug 06 2015 - 11:52:06)
+C
+*** file: u-boot.img
+sx -vv u-boot.img 
+Sending u-boot.img, 3239 blocks: Give your local XMODEM receive command now.
+Xmodem sectors/kbytes sent:   0/ 0kRetry 0: NAK on sector
+Bytes Sent: 414720   BPS:4480                            
+
+Transfer complete
+
+*** exit status: 0
+ xyzModem - CRC mode, 3241(SOH)/0(STX)/0(CAN) packets, 3 retries
+Loaded 414700 bytes
+
+
+U-Boot 2015.07-00256-g413978d-dirty (Aug 06 2015 - 11:52:06 +0530)
+
+       Watchdog enabled
+I2C:   ready
+DRAM:  512 MiB
+MMC:   OMAP SD/MMC: 0
+Card did not respond to voltage select!
+MMC init failedNet:   <ethaddr> not set. Validating first E-fuse MAC
+cpsw, usb_ether
+Hit any key to stop autoboot:  0 
+U-Boot# 
+
+
+
+from u-boot its always up to you from where you load the kernel and filesystem.
+
+
+To boot BBB with Network File System click this link: BBB booting with NFS
