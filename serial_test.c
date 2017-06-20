@@ -28,6 +28,28 @@ void get_hex_string(int num , char *hex_string, int string_size)
 }
 
 
+/*make separate file main_switch*/
+void main_switch(char check_case)
+{
+	switch(check_case) 
+	{
+	
+	  case 'a':serial_tx("Help---- use below commands \r\n");
+	           serial_tx("b: Get Running Core Details \r\n");   	
+	         break; 
+		
+	  case 'b':get_core_details(); 	
+	         break; 
+	         
+	  default:
+	       serial_tx("Default case \r\n");	
+	}
+		
+	
+}
+
+
+
 int c_entry(void)
 {
 	char str[32];
@@ -40,20 +62,18 @@ int c_entry(void)
 	serial_byte_rx();
 	serial_tx("Welcome to 1st bootloader\r\n");
     //get_hex_string(num, hex_string, 32);
-    //serial_tx(hex_string);    
+    serial_tx("Enter ? for help\r\n");    
     //serial_tx("\n");
-    /*for (;;)
+    for (;;)
 	{
 		serial_tx("Cmd> ");
 		serial_rx(str, 32);
 		serial_tx("You entered: ");
-		serial_tx(str);
 		serial_tx("\r\n");
-	}*/
-    get_core_details();
+		main_switch(str[0]);  
+		
+	}
 	serial_shut();
-    
-    
 	return 0;
 }
 

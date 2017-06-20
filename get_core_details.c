@@ -1,5 +1,7 @@
 #include "get_core_details.h"
 #include "serial.h"
+/*Here refer to Cortex-A8 Technical Refrence manual to get any core details.*/
+
 
 int set_string_zero(char *string, int size)
 {
@@ -126,11 +128,9 @@ int detail_list(core_detail *reg_detail)
 	          break;
       
       default :serial_tx("default case  \r\n");
-               
-      
 	}
 	
-	return 0;
+ return 0;
 }
 
 
