@@ -45,6 +45,37 @@ unsigned long get_processor_feature_1(int *case_s)
 }
 
 
+unsigned long get_processor_multiprocessor_id(int *case_s)
+{
+	unsigned long reg_val;
+	/* read c0 MAIN_ID */
+	__asm__ __volatile__("mrc p15, 0, %0, c0, c0, 5\n" : "=r" (reg_val) : : );
+	 *case_s = 4;
+	return reg_val;
+	
+}
+
+unsigned long get_processor_debug_feature_model(int *case_s)
+{
+	unsigned long reg_val;
+	/* read c0 MAIN_ID */
+	__asm__ __volatile__("mrc p15, 0, %0, c0, c1, 2\n" : "=r" (reg_val) : : );
+	 *case_s = 5;
+	return reg_val;
+	
+}
+
+unsigned long get_processor_Secure_Configuration_Register(int *case_s)
+{
+	unsigned long reg_val;
+	/* read c0 MAIN_ID */
+	__asm__ __volatile__("mrc p15, 0, %0, c1, c1, 0\n" : "=r" (reg_val) : : );
+	 *case_s = 6;
+	return reg_val;
+	
+}
+
+
 int detail_list(core_detail *reg_detail) 
 {
 	char hex_string[50] ={0};
@@ -69,7 +100,28 @@ int detail_list(core_detail *reg_detail)
               serial_tx(hex_string);
 	          serial_tx("\r\n");
 	          break;       
+
+	  case 4: set_string_zero(hex_string,50);
+	          serial_tx("Case 4: 	multiprocessor_id = ");
+	          get_hex_string( reg_detail->reg , hex_string, 50);
+              serial_tx(hex_string);
+	          serial_tx("\r\n");
+	          break;
 	          
+	  case 5: set_string_zero(hex_string,50);
+	          serial_tx("Case 5: 	debug_feature_model = ");
+	          get_hex_string( reg_detail->reg , hex_string, 50);
+              serial_tx(hex_string);
+	          serial_tx("\r\n");
+	          break;	          
+
+	  case 6: set_string_zero(hex_string,50);
+	          serial_tx("Case 6: 	Secure_Configuration_Register = ");
+	          get_hex_string( reg_detail->reg , hex_string, 50);
+              serial_tx(hex_string);
+	          serial_tx("\r\n");
+	          break;	          
+	          	          
 	  case 0 :serial_tx("0 case  \r\n");
 	          break;
       
@@ -102,6 +154,17 @@ int get_core_details(void)
 	detail.reg = get_processor_feature_1(&detail.detail_case);
 	detail_list(&detail);
 
+    detail.reg = 0;
+	detail.reg = get_processor_multiprocessor_id(&detail.detail_case);
+	detail_list(&detail);
+
+    detail.reg = 0;
+	detail.reg = get_processor_debug_feature_model(&detail.detail_case);
+	detail_list(&detail);
+	
+    detail.reg = 0;
+	detail.reg = get_processor_Secure_Configuration_Register(&detail.detail_case);
+	detail_list(&detail);	
 
 
 }

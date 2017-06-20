@@ -1,0 +1,1 @@
+serial_test.o: serial_test.c serial.h common.h get_core_details.h
