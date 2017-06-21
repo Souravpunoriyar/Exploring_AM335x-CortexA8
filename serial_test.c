@@ -69,6 +69,7 @@ int c_entry(void)
 		serial_tx("Cmd> ");
 		serial_rx(str, 32);
 		serial_tx("You entered: ");
+		serial_tx(str);
 		serial_tx("\r\n");
 		main_switch(str[0]);  
 		

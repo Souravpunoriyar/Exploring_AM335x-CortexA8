@@ -14,6 +14,13 @@ typedef enum
 	cm_mask = 0x1F
 } CPUMode;
 
+/*
+ * isb/dsb/dmb memory barriors
+ * https://community.arm.com/processors/b/blog/posts/memory-access-ordering-part-3---memory-access-ordering-in-the-arm-architecture
+ * 
+ * */
+
+
 static inline void mb(void)
 {
 	__asm__ __volatile__("dsb\n");
