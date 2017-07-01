@@ -2,7 +2,7 @@
 Exploring AM335x-A8 and Beaglebone black bootloader from scratch <br />
 
 Special Thanks :-)<br />
-1> sysplay.in: Anil Kumar Pugulia for inspiring and giving me his initial code to explore more.<br />
+1> sysplay.in: Anil Kumar Pugalia for inspiring and giving me his initial code to explore more.<br />
 2> Friends<br />
 3> Opensource Community and various forums like stackoverflow, TI , BBB and others.<br />
 
