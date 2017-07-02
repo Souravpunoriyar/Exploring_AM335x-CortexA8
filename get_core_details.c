@@ -1,6 +1,32 @@
 #include "get_core_details.h"
 #include "serial.h"
-/*Here refer to Cortex-A8 Technical Refrence manual to get any core details.*/
+/*Here refer to Cortex-A8 Technical Refrence manual to get any core details.
+Ref: http://netwinder.osuosl.org/pub/netwinder/docs/arm/ARM7500FEvB_3.pdf
+* Cortex-A8 Technical refrence manual (for MRC and MCR details)
+* */
+
+/*explanation to mrc command
+ * Move to ARM register from coprocessor.
+ * MRC{cond} coproc, opcode1, Rd, CRn, CRm{, opcode2}
+ * where:
+
+cond :is an optional condition code (see Conditional execution).
+coproc :is the name of the coprocessor the instruction isfor. The standard name is pn, where n is an integer in the range 0-15.
+CRn is the register number within CP15
+Op1 is the Opcode_1 value for the register
+CRm is the operational register
+Op2 is the Opcode_2 value for the register* 
+* The CRn field of MRC and MCR instructions specifies the coprocessor register to access. The CRm field and Opcode_2 fields specify a particular action when addressing registers
+* example : mrc p15, 0, %0, c0, c0, 0 (Main id)
+* MRC instruction
+* p15 : Coprocessor name
+* 0 = Opcode 1
+* %0 = Put result in r0
+* c0,c0 on which operations to be performed
+* 0 = Opcode 2
+* 
+* If an Opcode_2 value corresponding to an unimplemented or reserved ID register with CRm equal to c0 and Opcode_1 = 0 is encountered, the system control coprocessor returns the value of the main ID register.
+ * */
 
 
 int set_string_zero(char *string, int size)
