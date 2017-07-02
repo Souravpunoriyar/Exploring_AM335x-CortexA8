@@ -27,8 +27,9 @@ Contents:-
 7> Jump from  SRAM to DDR.
 8> Add some secure boot feature.
 9> Run HeleOS or write a OS from scratch.
+10> Bootloader contents follows steps from Boot_seq_to_follow (readme).
 
-10 >....Will add more to list
+1X >....Will add more to list
 
 My DeadLine:- Dec 2017 including other personal projects.
 

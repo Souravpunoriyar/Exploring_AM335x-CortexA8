@@ -1,0 +1,20 @@
+Steps of booting
+ref form :- Bare-metal Boot code for ARMv8.pdf
+
+steps:-
+1> Initializing exceptions
+  a.Setting up vector table.
+  
+2> Initializing registers.
+    a.Initializing GP registers.
+    b.Initializing STACK registers.
+    c.Initializing SYSTEM registers.
+  
+3> Configuuring MMU and Caches.
+    a.Cleaning and invalidating caches.
+    b.Setting up MMU
+    c.Enable MMU and Caches
+    
+4> Enable NEON and FPU.
+
+5> Changing Modes	
