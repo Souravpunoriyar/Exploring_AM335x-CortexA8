@@ -21,13 +21,17 @@ Op2 is the Opcode_2 value for the register*
 * MRC instruction
 * p15 : Coprocessor name
 * 0 = Opcode 1
-* %0 = Put result in r0
+* %0 = Put result in reg_val
 * c0,c0 on which operations to be performed
 * 0 = Opcode 2
 * 
 * If an Opcode_2 value corresponding to an unimplemented or reserved ID register with CRm equal to c0 and Opcode_1 = 0 is encountered, the system control coprocessor returns the value of the main ID register.
  * */
 
+
+/*inline assembly help:
+ * http://www.ethernut.de/en/documents/arm-inline-asm.html
+ * */
 
 int set_string_zero(char *string, int size)
 {
