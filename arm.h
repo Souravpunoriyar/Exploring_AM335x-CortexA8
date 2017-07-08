@@ -23,11 +23,11 @@ typedef enum
 
 static inline void mb(void)
 {
-	__asm__ __volatile__("dsb\n");
+	__asm__ __volatile__("dsb\n"); /*Memory barrior concept: whenever a memory access needs to have completed before program execution progresses.*/
 }
 static inline void ib(void)
 {
-	__asm__ __volatile__("isb\n");
+	__asm__ __volatile__("isb\n"); /*Memory barrior concept:whenever instruction fetches need to explicitly take place after a certain point in the program, for example after memory map updates or after writing code to be executed. (In practice, this means "throw away any prefetched instructions at this point".)*/
 }
 unsigned long cpu_mode_get(void);
 void cpu_mode_set(CPUMode cm);

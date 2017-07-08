@@ -141,9 +141,10 @@ void interrupt_init(void)
 	// Enable IRQ at ARM Core side
 	mb(); // Data Sync Barrier b4 it
 	// Refer sec 2.14 in Cortex A8 TRM
-	__asm__ __volatile__("mrs r0, cpsr\n");
-	__asm__ __volatile__("bic r0, r0, 0x80\n"); // 0x80 for IRQ, 0x40 for FIQ
-	__asm__ __volatile__("msr cpsr, r0\n");
+	__asm__ __volatile__("mrs r0, cpsr\n");//Read CPSR into r0
+	__asm__ __volatile__("bic r0, r0, 0x80\n"); // 0x80 for IRQ, 0x40 for FIQ 
+												//Sourav: r0 = (r0 & !(0x80))
+	__asm__ __volatile__("msr cpsr, r0\n"); //Write r0 to cpsr
 }
 void interrupt_shut(void)
 {
@@ -152,6 +153,7 @@ void interrupt_shut(void)
 	// Refer sec 2.14 in Cortex A8 TRM
 	__asm__ __volatile__("mrs r0, cpsr\n");
 	__asm__ __volatile__("orr r0, r0, 0x80\n"); // 0x80 for IRQ, 0x40 for FIQ
+	/*ORR inclusive OR operations r0 = r0*/
 	__asm__ __volatile__("msr cpsr, r0\n");
 }
 
