@@ -108,7 +108,7 @@ static void setup_ivt(void)
 	extern void _fast_interrupt(void);
 
 	/* Nullify our IVT, not depending on BSS */
-	for (i = 0; i < MAX_NUM_IRQS; i++)
+	for (i = 0; i < MAX_NUM_IRQS; i++) 
 		ivt[i] = NULL;
 
 	/* Initialization - Sec 26 */
@@ -126,13 +126,13 @@ static void setup_ivt(void)
 	 */
 
 	//public_ram[0] = 
-	public_ram[1] = _undefined_instruction;
-	public_ram[2] = _software_interrupt;
-	public_ram[3] = _prefetch_abort;
-	public_ram[4] = _data_abort;
+	public_ram[1] = _undefined_instruction; /*address from .s */
+	public_ram[2] = _software_interrupt;   /*address from .s */
+	public_ram[3] = _prefetch_abort;      /*address from .s */
+	public_ram[4] = _data_abort;         /*address from .s */
 	//public_ram[5] = 
-	public_ram[6] = _interrupt;
-	public_ram[7] = _fast_interrupt;
+	public_ram[6] = _interrupt;        /*address from .s */
+	public_ram[7] = _fast_interrupt;  /*address from .s */
 }
 
 void interrupt_init(void)
