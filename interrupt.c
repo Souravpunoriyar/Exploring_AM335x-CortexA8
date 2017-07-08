@@ -6,7 +6,8 @@
 #define MAX_NUM_IRQS 128
 #define IRQ_MASK ((MAX_NUM_IRQS) - 1)
 
-static void (*ivt[MAX_NUM_IRQS])(void); // Make no assumptions on its NULL initialization
+static void (*ivt[MAX_NUM_IRQS])(void); // Make no assumptions on its NULL initialization 
+                                        //Array of 128 function pointers .
 
 unsigned long interrupt_vectors_address_get(void)
 {
@@ -90,7 +91,15 @@ void __attribute__((interrupt("FIQ"))) fast_interrupt_vector(void)
 static void setup_ivt(void)
 {
 	int i;
-	void (**public_ram)(void) = (void (**)(void))(0x4030CE20);
+	void (**public_ram)(void) = (void (**)(void))(0x4030CE20); 
+	/*	why double function pointer 
+	 * public_ram  = 0x4030CE24 for _undefined_instruction
+	 * This address(0x4030CE24) should contain address of the function of void (*funcp)(void).
+	 * from datasheet:
+	 * User code can redirect any exception to a custom handler either by writing its address to the appropriate location from
+       4030CE24h to 4030CE3Ch or by overriding the branch (load into PC) instruction between addresses from
+       4030CE04h to 4030CE1Ch.
+	 * */
 	extern void _undefined_instruction(void);
 	extern void _software_interrupt(void);
 	extern void _prefetch_abort(void);
