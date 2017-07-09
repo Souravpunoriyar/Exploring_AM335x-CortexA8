@@ -1,4 +1,7 @@
-onnect J4 (RXD) to TXD line of  CP2102 USB2.0 to TTL UART serial converter
+
+to add file := use ctrl+a+s
+
+connect J4 (RXD) to TXD line of  CP2102 USB2.0 to TTL UART serial converter
 Connect J5 (TXD) to RXD line of  CP2102 USB2.0 to TTL UART serial converter
 Connect J1 (GND) to GND line of  CP2102 USB2.0 to TTL UART serial converter
 

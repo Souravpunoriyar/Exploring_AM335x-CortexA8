@@ -192,9 +192,10 @@ int get_core_details(void)
 	detail.reg = get_processor_debug_feature_model(&detail.detail_case);
 	detail_list(&detail);
 	
+	/*
     detail.reg = 0;
 	detail.reg = get_processor_Secure_Configuration_Register(&detail.detail_case);
 	detail_list(&detail);	
-
-
+*/
+ return 0;
 }

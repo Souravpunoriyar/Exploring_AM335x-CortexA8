@@ -6,3 +6,4 @@ typedef struct {
 	int detail_case;
 	
 } core_detail;
+

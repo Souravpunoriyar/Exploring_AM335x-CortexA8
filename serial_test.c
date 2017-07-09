@@ -35,14 +35,21 @@ void main_switch(char check_case)
 	{
 	
 	  case 'a':serial_tx("Help---- use below commands \r\n");
-	           serial_tx("b: Get Running Core Details \r\n");   	
+	           serial_tx("b: Get Running Core Details \r\n");
+	           serial_tx("c: Core init \r\n");   	   	
 	         break; 
 		
 	  case 'b':get_core_details(); 	
 	         break; 
+	  
+	  case 'c':core_init(); 	
+	         break; 
 	         
 	  default:
 	       serial_tx("Default case \r\n");	
+	       serial_tx("Help---- use below commands \r\n");
+	       serial_tx("b: Get Running Core Details \r\n");
+	       serial_tx("c: Core init \r\n");   	   	
 	}
 		
 	
