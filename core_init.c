@@ -63,9 +63,34 @@ void enable_Icache_L1(void)
    
 }
 
+
+/* The following code needs -mfpu=neon to be added as compiler flag */
+void neon_enable(void)
+{
+        __asm__ __volatile__("mrc p15, 0, r1, c1, c0, 2\n"); // r1 = Access Control Register
+        __asm__ __volatile__("orr r1, r1, (0xF << 20)\n"); // Enable full access for coprocessor p10,11
+        __asm__ __volatile__("mcr p15, 0, r1, c1, c0, 2\n"); // Access Control Register = r1
+        __asm__ __volatile__("mov r0, 0x40000000\n");  // Switch on the VFP and NEON hardware
+        __asm__ __volatile__("vmsr fpexc, r0\n"); // Set Neon/VFP Enable bit - fmxr <=> vmsr
+}
+
+void neon_disable(void)
+{
+        __asm__ __volatile__("mov r0, 0x00000000\n");
+        __asm__ __volatile__("vmsr fpexc, r0\n"); // Clear Neon/VFP Enable bit - fmxr <=> vmsr
+        __asm__ __volatile__("mrc p15, 0, r1, c1, c0, 2\n"); // r1 = Access Control Register
+        __asm__ __volatile__("bic r1, r1, (0xF << 20)\n"); // Disable full access for p10,11
+        __asm__ __volatile__("mcr p15, 0, r1, c1, c0, 2\n"); // Access Control Register = r1
+}
+
+
+
+
+
+
 void core_init(void)
 {
 	interrupt_init(); //setup interrupt vector table
 	enable_Icache_L1(); //disable mmu and l1-data cache , only enable l1 instruction cache
-		
+	neon_enable(); //Enable NEON and FPU	
 }

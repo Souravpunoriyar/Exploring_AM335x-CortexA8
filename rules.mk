@@ -8,7 +8,7 @@ OBJDUMP := ${CROSS_COMPILE}objdump
 
 #OPTIMIZATION_FLAGS = -O2
 CFLAGS := -mcpu=cortex-a8
-#CFLAGS += -mfpu=neon
+CFLAGS += -mfpu=neon
 CFLAGS += ${OPTIMIZATION_FLAGS}
 ASFLAGS := -mcpu=cortex-a8
 #ASFLAGS += -mfpu=neon
