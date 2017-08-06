@@ -393,22 +393,22 @@ static void config_vtp_x(void)
 //                        VTP_CTRL_READY)
 //                ;
 
-serial_tx("200");
+serial_tx("200\r\n");
         writel(readl(0x44E10E0C) | (0x1 << 6),
                         0x44E10E0C);
-serial_tx("201");
+serial_tx("201\r\n");
         writel(readl(0x44E10E0C) & (~0x1),
                         0x44E10E0C);
-serial_tx("202");
+serial_tx("202\r\n");
         writel(readl(0x44E10E0C) | 0x1,
                         0x44E10E0C);
-serial_tx("203");
+serial_tx("203\r\n");
 
         /* Poll for READY */
         while ((readl(0x44E10E0C) & (0x1 << 5)) !=
                         (0x1 << 5))
                 ;
-serial_tx("204");
+serial_tx("204\r\n");
 }
 
 
@@ -420,23 +420,23 @@ serial_tx("204");
 */
 void config_ddr_x(void)
 {
-serial_tx("1 \r\n");
+serial_tx("step 1: enabling emif clocks \r\n");
         enable_emif_clocks_x();
-serial_tx("2 \r\n");
+serial_tx("step 2:configure ddr_pll \r\n");
         ddr_pll_config_x();
-serial_tx("3 \r\n");
+serial_tx("step 3:configure vtp_x \r\n");
         config_vtp_x();
-serial_tx("4 \r\n");
+serial_tx("step 4:configure cmd _ctrl\r\n");
         config_cmd_ctrl_x();
-serial_tx("5 \r\n");
+serial_tx("step 5:configure ddr_data regs_x0\r\n");
 
         config_ddr_data_x_0();
-serial_tx("6 \r\n");
+serial_tx("step 6:configure ddr_data regs_x1\r\n");
         config_ddr_data_x_1();
-serial_tx("7 \r\n");
+serial_tx("step 7:configure ddr_io ctrl_x\r\n");
 
         config_io_ctrl_x();
-serial_tx("8 \r\n");
+serial_tx("step 8:\r\n");
 
         /* Set CKE to be controlled by EMIF/DDR PHY */
 //        writel(DDR_CKE_CTRL_NORMAL, &ddrctrl->ddrckectrl);
