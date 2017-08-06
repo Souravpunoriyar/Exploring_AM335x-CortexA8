@@ -85,9 +85,6 @@ void neon_disable(void)
 
 
 
-
-
-
 void core_init(void)
 {
 	interrupt_init(); //setup interrupt vector table
