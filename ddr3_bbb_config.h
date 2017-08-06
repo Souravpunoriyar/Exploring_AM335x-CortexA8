@@ -39,8 +39,8 @@
 #define __iormb()       dmb()
 #define __iowmb()       dmb()
 
-#define writel(v,c)     ({ u32 __v = v; __iowmb(); __arch_putl(__v,c); __v; })
-#define readl(c)        ({ u32 __v = __arch_getl(c); __iormb(); __v; })
+#define writel(v,c)     ({ unsigned int __v = v; __iowmb(); __arch_putl(__v,c); __v; })
+#define readl(c)        ({ unsigned int __v = __arch_getl(c); __iormb(); __v; })
 
 
 /* PLL Subsystem Base Address */
@@ -176,6 +176,164 @@ struct emif_regs {
 };
 
 
+struct emif_reg_struct {
+         unsigned int emif_mod_id_rev;
+        unsigned int emif_status;
+         unsigned int emif_sdram_config;
+         unsigned int emif_lpddr2_nvm_config;
+         unsigned int emif_sdram_ref_ctrl;
+         unsigned int emif_sdram_ref_ctrl_shdw;
+         unsigned int emif_sdram_tim_1;
+         unsigned int emif_sdram_tim_1_shdw;
+         unsigned int emif_sdram_tim_2;
+         unsigned int emif_sdram_tim_2_shdw;
+         unsigned int emif_sdram_tim_3;
+        unsigned int emif_sdram_tim_3_shdw;
+        unsigned int emif_lpddr2_nvm_tim;
+         unsigned int emif_lpddr2_nvm_tim_shdw;
+         unsigned int emif_pwr_mgmt_ctrl;
+         unsigned int emif_pwr_mgmt_ctrl_shdw;
+         unsigned int emif_lpddr2_mode_reg_data;
+         unsigned int padding1[1];
+         unsigned int emif_lpddr2_mode_reg_data_es2;
+         unsigned int padding11[1];
+         unsigned int emif_lpddr2_mode_reg_cfg;
+         unsigned int emif_l3_config;
+         unsigned int emif_l3_cfg_val_1;
+         unsigned int emif_l3_cfg_val_2;
+         unsigned int emif_iodft_tlgc;
+         unsigned int padding2[7];
+         unsigned int emif_perf_cnt_1;
+         unsigned int emif_perf_cnt_2;
+         unsigned int emif_perf_cnt_cfg;
+         unsigned int emif_perf_cnt_sel;
+         unsigned int emif_perf_cnt_tim;
+         unsigned int padding3;
+         unsigned int emif_read_idlectrl;
+         unsigned int emif_read_idlectrl_shdw;
+         unsigned int padding4;
+         unsigned int emif_irqstatus_raw_sys;
+         unsigned int emif_irqstatus_raw_ll;
+         unsigned int emif_irqstatus_sys;
+         unsigned int emif_irqstatus_ll;
+         unsigned int emif_irqenable_set_sys;
+         unsigned int emif_irqenable_set_ll;
+         unsigned int emif_irqenable_clr_sys;
+         unsigned int emif_irqenable_clr_ll;
+         unsigned int padding5;
+         unsigned int emif_zq_config;
+         unsigned int emif_temp_alert_config;
+         unsigned int emif_l3_err_log;
+         unsigned int emif_rd_wr_lvl_rmp_win;
+         unsigned int emif_rd_wr_lvl_rmp_ctl;
+         unsigned int emif_rd_wr_lvl_ctl;
+         unsigned int padding6[1];
+         unsigned int emif_ddr_phy_ctrl_1;
+         unsigned int emif_ddr_phy_ctrl_1_shdw;
+         unsigned int emif_ddr_phy_ctrl_2;
+         unsigned int padding7[4];
+         unsigned int emif_prio_class_serv_map;
+         unsigned int emif_connect_id_serv_1_map;
+         unsigned int emif_connect_id_serv_2_map;
+         unsigned int padding8[5];
+         unsigned int emif_rd_wr_exec_thresh;
+         unsigned int emif_cos_config;
+         unsigned int padding9[6];
+         unsigned int emif_ddr_phy_status[28];
+         unsigned int padding10[20];
+         unsigned int emif_ddr_ext_phy_ctrl_1;
+         unsigned int emif_ddr_ext_phy_ctrl_1_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_2;
+         unsigned int emif_ddr_ext_phy_ctrl_2_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_3;
+         unsigned int emif_ddr_ext_phy_ctrl_3_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_4;
+         unsigned int emif_ddr_ext_phy_ctrl_4_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_5;
+         unsigned int emif_ddr_ext_phy_ctrl_5_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_6;
+         unsigned int emif_ddr_ext_phy_ctrl_6_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_7;
+         unsigned int emif_ddr_ext_phy_ctrl_7_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_8;
+         unsigned int emif_ddr_ext_phy_ctrl_8_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_9;
+         unsigned int emif_ddr_ext_phy_ctrl_9_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_10;
+         unsigned int emif_ddr_ext_phy_ctrl_10_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_11;
+         unsigned int emif_ddr_ext_phy_ctrl_11_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_12;
+         unsigned int emif_ddr_ext_phy_ctrl_12_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_13;
+         unsigned int emif_ddr_ext_phy_ctrl_13_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_14;
+         unsigned int emif_ddr_ext_phy_ctrl_14_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_15;
+         unsigned int emif_ddr_ext_phy_ctrl_15_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_16;
+         unsigned int emif_ddr_ext_phy_ctrl_16_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_17;
+         unsigned int emif_ddr_ext_phy_ctrl_17_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_18;
+         unsigned int emif_ddr_ext_phy_ctrl_18_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_19;
+         unsigned int emif_ddr_ext_phy_ctrl_19_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_20;
+         unsigned int emif_ddr_ext_phy_ctrl_20_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_21;
+         unsigned int emif_ddr_ext_phy_ctrl_21_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_22;
+         unsigned int emif_ddr_ext_phy_ctrl_22_shdw;
+         unsigned int emif_ddr_ext_phy_ctrl_23;
+         unsigned int emif_ddr_ext_phy_ctrl_23_shdw;
+          unsigned int emif_ddr_ext_phy_ctrl_24;
+        unsigned int emif_ddr_ext_phy_ctrl_24_shdw;
+        unsigned int emif_ddr_ext_phy_ctrl_25;
+        unsigned int emif_ddr_ext_phy_ctrl_25_shdw;
+        unsigned int emif_ddr_ext_phy_ctrl_26;
+        unsigned int emif_ddr_ext_phy_ctrl_26_shdw;
+        unsigned int emif_ddr_ext_phy_ctrl_27;
+        unsigned int emif_ddr_ext_phy_ctrl_27_shdw;
+        unsigned int emif_ddr_ext_phy_ctrl_28;
+        unsigned int emif_ddr_ext_phy_ctrl_28_shdw;
+        unsigned int emif_ddr_ext_phy_ctrl_29;
+        unsigned int emif_ddr_ext_phy_ctrl_29_shdw;
+        unsigned int emif_ddr_ext_phy_ctrl_30;
+        unsigned int emif_ddr_ext_phy_ctrl_30_shdw;
+        unsigned int emif_ddr_ext_phy_ctrl_31;
+        unsigned int emif_ddr_ext_phy_ctrl_31_shdw;
+        unsigned int emif_ddr_ext_phy_ctrl_32;
+        unsigned int emif_ddr_ext_phy_ctrl_32_shdw;
+        unsigned int emif_ddr_ext_phy_ctrl_33;
+        unsigned int emif_ddr_ext_phy_ctrl_33_shdw;
+        unsigned int emif_ddr_ext_phy_ctrl_34;
+        unsigned int emif_ddr_ext_phy_ctrl_34_shdw;
+        unsigned int emif_ddr_ext_phy_ctrl_35;
+        unsigned int emif_ddr_ext_phy_ctrl_35_shdw;
+        union {
+                unsigned int emif_ddr_ext_phy_ctrl_36;
+                unsigned int emif_ddr_fifo_misaligned_clear_1;
+        };
+        union {
+                unsigned int emif_ddr_ext_phy_ctrl_36_shdw;
+                unsigned int emif_ddr_fifo_misaligned_clear_2;
+        };
+};
+
+
+
+struct ctrl_stat {
+         unsigned int resv1[16];
+         unsigned int statusreg;         /* ofset 0x40 */
+         unsigned int resv2[51];
+         unsigned int secure_emif_sdram_config;  /* offset 0x0110 */
+         unsigned int resv3[319];
+         unsigned int dev_attr;
+ };
+
+
+
 
 struct ctrl_ioregs {
          unsigned int cm0ioctl;
@@ -214,6 +372,92 @@ struct cmd_control {
  };
  
 
+
+struct ddr_cmd_regs {
+        unsigned int resv0[7];
+        unsigned int cm0csratio;        /* offset 0x01C */
+        unsigned int resv1[3];
+        unsigned int cm0iclkout;        /* offset 0x02C */
+        unsigned int resv2[8];
+        unsigned int cm1csratio;        /* offset 0x050 */
+        unsigned int resv3[3];
+        unsigned int cm1iclkout;        /* offset 0x060 */
+        unsigned int resv4[8];
+        unsigned int cm2csratio;        /* offset 0x084 */
+        unsigned int resv5[3];
+        unsigned int cm2iclkout;        /* offset 0x094 */
+        unsigned int resv6[3];
+};
+
+
+/* DDR Base address */
+#define DDR_PHY_CMD_ADDR                0x44E12000
+#define DDR_PHY_DATA_ADDR               0x44E120C8
+#define DDR_PHY_CMD_ADDR2               0x47C0C800
+#define DDR_PHY_DATA_ADDR2              0x47C0C8C8
+#define DDR_DATA_REGS_NR                2
+
+
+
+static struct ddr_cmd_regs *ddr_cmd_reg[2] = {
+                                  (struct ddr_cmd_regs *)DDR_PHY_CMD_ADDR,
+                                  (struct ddr_cmd_regs *)DDR_PHY_CMD_ADDR2};
+
+
+
+
+struct ddr_data_regs {
+        unsigned int dt0rdsratio0;      /* offset 0x0C8 */
+        unsigned int resv1[4];
+        unsigned int dt0wdsratio0;      /* offset 0x0DC */
+        unsigned int resv2[4];
+        unsigned int dt0wiratio0;       /* offset 0x0F0 */
+        unsigned int resv3;
+        unsigned int dt0wimode0;        /* offset 0x0F8 */
+        unsigned int dt0giratio0;       /* offset 0x0FC */
+        unsigned int resv4;
+        unsigned int dt0gimode0;        /* offset 0x104 */
+        unsigned int dt0fwsratio0;      /* offset 0x108 */
+        unsigned int resv5[4];
+        unsigned int dt0dqoffset;       /* offset 0x11C */
+        unsigned int dt0wrsratio0;      /* offset 0x120 */
+        unsigned int resv6[4];
+        unsigned int dt0rdelays0;       /* offset 0x134 */
+        unsigned int dt0dldiff0;        /* offset 0x138 */
+        unsigned int resv7[12];
+};
+
+
+static struct ddr_data_regs *ddr_data_reg[2] = {
+                                (struct ddr_data_regs *)DDR_PHY_DATA_ADDR,
+                                (struct ddr_data_regs *)DDR_PHY_DATA_ADDR2};
+
+
+
  void config_ddr(unsigned int pll, const struct ctrl_ioregs *ioregs,
                  const struct ddr_data *data, const struct cmd_control *ctrl,
                  const struct emif_regs *regs, int nr);
+
+ struct ddr_cmdtctrl {
+         unsigned int cm0ioctl;
+         unsigned int cm1ioctl;
+         unsigned int cm2ioctl;
+         unsigned int resv2[12];
+         unsigned int dt0ioctl;
+         unsigned int dt1ioctl;
+         unsigned int dt2ioctrl;
+         unsigned int dt3ioctrl;
+         unsigned int resv3[4];
+         unsigned int emif_sdram_config_ext;
+ };
+
+/* DDR Base address */
+#define DDR_CTRL_ADDR                   0x44E10E04
+#define DDR_CONTROL_BASE_ADDR           0x44E11404
+
+static struct ddr_cmdtctrl *ioctrl_reg = {
+                          (struct ddr_cmdtctrl *)DDR_CONTROL_BASE_ADDR};
+
+
+
+void ddr3_bbb_init();

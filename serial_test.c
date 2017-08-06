@@ -1,6 +1,7 @@
 #include "serial.h"
 #include "get_core_details.h"
 
+
 void get_hex_string(int num , char *hex_string, int string_size)
 {
   int rmndr = 0, temp = 0;
@@ -34,22 +35,27 @@ void main_switch(char check_case)
 	switch(check_case) 
 	{
 	
-	  case 'a':serial_tx("Help---- use below commands \r\n");
-	           serial_tx("b: Get Running Core Details \r\n");
-	           serial_tx("c: Core init \r\n");   	   	
+	  case '?':serial_tx("Help---- use below commands \r\n");
+	           serial_tx("a: Get Running Core Details \r\n");
+	           serial_tx("b: Core init \r\n");   	   	
+	           serial_tx("c: Beaglebone black ddr3  init \r\n");
 	         break; 
 		
-	  case 'b':get_core_details(); 	
+	  case 'a':get_core_details(); 	
 	         break; 
 	  
-	  case 'c':core_init(); 	
+	  case 'b':core_init(); 	
+	         break; 
+	         
+	  case 'c':config_ddr_x(); 	
 	         break; 
 	         
 	  default:
 	       serial_tx("Default case \r\n");	
 	       serial_tx("Help---- use below commands \r\n");
-	       serial_tx("b: Get Running Core Details \r\n");
-	       serial_tx("c: Core init \r\n");   	   	
+	       serial_tx("'?' for help....... \r\n");
+	       serial_tx("a: Get Running Core Details \r\n");
+	       serial_tx("b: Core init \r\n");   	   	
 	}
 		
 	

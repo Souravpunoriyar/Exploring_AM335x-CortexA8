@@ -8,7 +8,7 @@ all: ${BINS}
 
 #leds_test.elf: leds.o
 
-serial_test.elf: serial.o get_core_details.o core_init.o
+serial_test.elf: serial.o get_core_details.o core_init.o ddr3.o
 
 #switch_test.elf: switch.o leds.o debug.o serial.o
 
